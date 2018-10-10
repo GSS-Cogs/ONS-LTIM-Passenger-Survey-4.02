@@ -20,7 +20,7 @@ pipeline {
                 }
             }
             steps {
-                sh "jupyter-nbconvert --to python --stdout '4.02_Migration_data.ipynb' | ipython"
+                sh "jupyter-nbconvert --output-dir=out --execute '4.02_Migration_data.ipynb'"
             }
         }
         stage('Upload draftset') {

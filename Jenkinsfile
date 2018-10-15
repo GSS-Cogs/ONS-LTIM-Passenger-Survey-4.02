@@ -20,7 +20,7 @@ pipeline {
                 }
             }
             steps {
-                sh "jupyter-nbconvert --output-dir=out --execute '4.02_Migration_data.ipynb'"
+                sh "jupyter-nbconvert --output-dir=out --ExecutePreprocessor.timeout=None --execute '4.02_Migration_data.ipynb'"
             }
         }
         stage('Upload draftset') {
@@ -30,8 +30,9 @@ pipeline {
                     for (def file : findFiles(glob: 'out/*.csv')) {
                         csvs.add("out/${file.name}")
                     }
-                    uploadDraftset('ONS LTIM Passenger Survey 4.02', csvs,
-                                   'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv')
+                    uploadTidy(csvs,
+                               'https://github.com/ONS-OpenData/ref_migration/raw/master/columns.csv',
+                               'ONS LTIM Passenger Survey 4.02')
                 }
             }
         }

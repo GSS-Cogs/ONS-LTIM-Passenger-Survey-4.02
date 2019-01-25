@@ -1,0 +1,79 @@
+{
+  "@context": ["http://www.w3.org/ns/csvw", {"@language": "en"}],
+  "tables": [
+    {
+      "url": "https://ons-opendata.github.io/ref_migration/codelists/migration-directions.csv",
+      "tableSchema": "https://ons-opendata.github.io/ref_common/codelist-schema.json"
+    }, {
+      "url": "https://ons-opendata.github.io/ref_migration/codelists/reason.csv",
+      "tableSchema": "https://ons-opendata.github.io/ref_common/codelist-schema.json"
+    }, {
+      "url": "https://ons-opendata.github.io/ref_migration/codelists/ips-citizenship.csv",
+      "tableSchema": "https://ons-opendata.github.io/ref_common/codelist-schema.json"
+    }, {
+      "url": "out/observations.csv",
+      "tableSchema": {
+        "columns": [{
+          "titles": "Year",
+          "name": "year",
+          "required": true
+        }, {
+          "titles": "Reason for migration",
+          "name": "reason",
+          "required": true
+        }, {
+          "titles": "Migration Flow",
+          "name": "flow",
+          "required": true
+        }, {
+          "titles": "IPS Citizenship",
+          "name": "citizenship",
+          "required": true
+        }, {
+          "titles": "CI",
+          "name": "ci",
+          "datatype": "number"
+        }, {
+          "titles": "Value",
+          "name": "value",
+          "required": true
+        }, {
+          "titles": "Measure Type",
+          "name": "measureType",
+          "datatype": {
+            "format": "Count"
+          }
+        }, {
+          "titles": "Unit",
+          "name": "unit",
+          "datatype": {
+            "base": "string",
+            "format": "people-thousands"
+          },
+          "required": true
+        }],
+        "foreignKeys": [{
+          "columnReference": "flow",
+          "reference": {
+            "resource": "https://ons-opendata.github.io/ref_migration/codelists/migration-directions.csv",
+            "columnReference": "notation"
+          }
+        }, {
+          "columnReference": "reason",
+          "reference": {
+            "resource": "https://ons-opendata.github.io/ref_migration/codelists/reason.csv",
+            "columnReference": "notation"
+          }
+        }, {
+          "columnReference": "citizenship",
+          "reference": {
+            "resource": "https://ons-opendata.github.io/ref_migration/codelists/ips-citizenship.csv",
+            "columnReference": "notation"
+          }
+        }],
+        "primaryKey": ["year", "reason", "flow", "citizenship",
+                       "value", "measureType", "unit"]
+      }
+    }
+  ]
+}
